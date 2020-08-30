@@ -4,26 +4,13 @@ const roleBuilder = require('role.builder');
 const spawner = require('spawner');
 const roleRepairer = require('role.repairer');
 const status = require('status');
-
-const minimumCreepCount = {
-    'harvester': 8,
-    'upgrader': 1,
-    'builder': 1,
-    'repairer': 1
-}
-
-const creepCount = {
-    'harvester': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'harvester'),
-    'upgrader': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'upgrader'),
-    'builder': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'builder'),
-    'repairer': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'repairer'),
-}
+const roleWallRepairer = require('./role.wallRepairer');
 
 // get some status updates
-status.run(creepCount, minimumCreepCount, Game.structures);
+status.print();
 
 // spawn creeps
-spawner.run(Game.spawns['Worker'], minimumCreepCount, creepCount);
+spawner.run(Game.spawns['Worker'], status.minimumCreepCount, status.creepCount);
 
 // get creepy
 for (const name in Game.creeps) {
@@ -43,5 +30,9 @@ for (const name in Game.creeps) {
 
     if (creep.memory.role == 'repairer') {
         roleRepairer.run(creep);
+    }
+
+    if (creep.memory.role == 'wallRepairer') {
+        roleWallRepairer.run(creep);
     }
 }

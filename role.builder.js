@@ -9,8 +9,13 @@ module.exports = {
         }
 
         if (creep.memory.working == true) {
-            const target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
-            if (target) {
+            if (target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES, {
+                filter: (site) => site.structureType == STRUCTURE_EXTENSION
+            })) {
+                if (creep.build(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                }
+            } else if (target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES)) {
                 if (creep.build(target) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }

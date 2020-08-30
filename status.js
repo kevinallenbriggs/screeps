@@ -1,12 +1,24 @@
-module.exports = {
-    run: function(creepCount, minimumCreepCount) {
-        console.log('Creep Count - ' +
-            creepCount.harvester + '/' + minimumCreepCount.harvester + ' Harvesters | ' +
-            creepCount.upgrader + '/' + minimumCreepCount.upgrader + ' Upgraders | ' +
-            creepCount.builder + '/' + minimumCreepCount.builder + ' Builders |' +
-            creepCount.repairer + '/' + minimumCreepCount.repairer + ' Repairers\n' +
+const spawner = require('spawner');
 
-            'Working Creeps - ' + _.sum(Game.creeps, (creep) => creep.memory.working == true)
+module.exports = {
+    print: function(creepCount, minimumCreepCount) {
+        console.log('Creep Count - ' +
+            this.creepCount.harvester + '/' + spawner.minimumCreepCount.harvester + ' Harvesters | ' +
+            this.creepCount.upgrader + '/' + spawner.minimumCreepCount.upgrader + ' Upgraders | ' +
+            this.creepCount.builder + '/' + spawner.minimumCreepCount.builder + ' Builders | ' +
+            this.creepCount.repairer + '/' + spawner.minimumCreepCount.repairer + ' Repairers | ' +
+            this.creepCount.wallRepairer + '/' + spawner.minimumCreepCount.wallRepairer + ' WallRepairers\n' +
+    
+            'Creeps Working - ' + _.sum(Game.creeps, (creep) => creep.memory.working == true) +
+                '/' + this.totalCreeps
         );
+    },
+    totalCreeps: _.filter(Game.creeps).length,
+    creepCount: {
+        'harvester': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'harvester'),
+        'upgrader': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'upgrader'),
+        'builder': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'builder'),
+        'repairer': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'repairer'),
+        'wallRepairer': _.sum(Game.creeps, (creeps) => creeps.memory.role == 'wallRepairer'),
     }
-};
+}

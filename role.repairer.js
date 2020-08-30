@@ -9,16 +9,14 @@ module.exports = {
         }
 
         if (creep.memory.working == true) {
-            const structureNeedingRepair = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: (structure) => structure.hits < structure.hitsMax && structure.structureType != STRUCTURE_WALL
+            const structureNeedingRepair = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+                filter: (structure) => structure.hits < structure.hitsMax && structure.structureType !== STRUCTURE_WALL
             });
 
             if (structureNeedingRepair !== undefined) {
                 if (creep.repair(structureNeedingRepair) !== ERR_NOT_IN_RANGE) {
                     creep.moveTo(structureNeedingRepair);
                 }
-            } else {
-                roleBuilder.run(creep);
             }
         } else {
             const target = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);

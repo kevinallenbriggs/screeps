@@ -1,22 +1,34 @@
 module.exports = {
+    minimumCreepCount: {
+        'harvester': 1,
+        'upgrader': 1,
+        'builder': 5,
+        'repairer': 1,
+        'wallRepairer': 2,
+    },
     run: function(spawn, minimumCreepCount, creepCount) {
-        if (creepCount.harvester < minimumCreepCount.harvester) {
-            spawn.spawnCreep([MOVE, MOVE, CARRY, WORK], _.uniqueId('Harvester'), {'memory': {
+        if (creepCount.harvester < this.minimumCreepCount.harvester) {
+            spawn.spawnCreep([MOVE, CARRY, WORK, WORK], _.uniqueId('Harvester'), {'memory': {
                 'role': 'harvester',
                 'working': false,
             }});
-        } else if (creepCount.builder < minimumCreepCount.builder) {
-            spawn.spawnCreep([MOVE, CARRY, MOVE, WORK], _.uniqueId('Builder'), {'memory': {
+        } else if (creepCount.builder < this.minimumCreepCount.builder) {
+            spawn.spawnCreep([MOVE, CARRY, WORK, WORK], _.uniqueId('Builder'), {'memory': {
                 'role': 'builder',
                 'working': false,
             }});
-        } else if (creepCount.repairer < minimumCreepCount.repairer) {
+        } else if (creepCount.repairer < this.minimumCreepCount.repairer) {
             spawn.spawnCreep([MOVE, CARRY, WORK, WORK], _.uniqueId('Repairer'), {'memory': {
                 'role': 'repairer',
                 'working': false,
             }});
+        } else if (creepCount.wallRepairer < this.minimumCreepCount.wallRepairer) {
+            spawn.spawnCreep([MOVE, CARRY, WORK, WORK], _.uniqueId('WallRepairer'), {'memory': {
+                'role': 'wallRepairer',
+                'working': false,
+            }});
         } else {
-            if (creepCount.upgrader < minimumCreepCount.upgrader) {
+            if (creepCount.upgrader < this.minimumCreepCount.upgrader) {
                 spawn.spawnCreep([MOVE, CARRY, WORK, WORK], _.uniqueId('Upgrader'), {'memory': {
                     'role': 'upgrader',
                     'working': false,
