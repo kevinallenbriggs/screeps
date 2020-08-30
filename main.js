@@ -22,16 +22,8 @@ const creepCount = {
 // get some status updates
 status.run(creepCount, minimumCreepCount, Game.structures);
 
-    'Working Creeps - ' + _.sum(Game.creeps, (creeps) => creeps.memory.working == true)
-);
-
-console.log('Structures needing repair - ' +
-    _.sum(Game.structures)
-);
-
-// spawn in creeps
-const spawn = Game.spawns['Worker'];
-spawner.run(spawn, minimumCreepCount, creepCount);
+// spawn creeps
+spawner.run(Game.spawns['Worker'], minimumCreepCount, creepCount);
 
 // get creepy
 for (const name in Game.creeps) {
