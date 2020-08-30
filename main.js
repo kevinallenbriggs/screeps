@@ -2,7 +2,8 @@ const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const spawner = require('spawner');
-const roleRepairer = require('./role.repairer');
+const roleRepairer = require('role.repairer');
+const status = require('status');
 
 const minimumCreepCount = {
     'harvester': 8,
@@ -19,11 +20,7 @@ const creepCount = {
 }
 
 // get some status updates
-console.log('Creep Count - ' +
-    creepCount.harvester + '/' + minimumCreepCount.harvester + ' Harvesters | ' +
-    creepCount.upgrader + '/' + minimumCreepCount.upgrader + ' Upgraders | ' +
-    creepCount.builder + '/' + minimumCreepCount.builder + ' Builders |' +
-    creepCount.repairer + '/' + minimumCreepCount.repairer + ' Repairers\n' +
+status.run(creepCount, minimumCreepCount, Game.structures);
 
     'Working Creeps - ' + _.sum(Game.creeps, (creeps) => creeps.memory.working == true)
 );
