@@ -13,21 +13,19 @@ module.exports = {
                 filter: (structure) => structure.structureType == STRUCTURE_WALL
             });
 
-            let target = undefined;
+            let targetWall = undefined;
 
             for (let healthPercentage = 0.0001; healthPercentage <= 1; healthPercentage += 0.0001) {
-                target = creep.pos.findClosestByPath(walls, {
+                if (targetWall = creep.pos.findClosestByPath(walls, {
                     filter: (wall) => wall.hits / wall.hitsMax < healthPercentage
-                });
-
-                if (target !== undefined) {
+                })) {
                     break;
                 }
             }
 
-            if (target !== undefined) {
-                if (creep.repair(target) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+            if (targetWall !== undefined) {
+                if (creep.repair(targetWall) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targetWall);
                 }
             } else {
                 // no walls to repair
@@ -35,11 +33,11 @@ module.exports = {
             }
 
         } else {
-            const target = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+            const targetSource = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
     
-            if(target) {
-                if(creep.harvest(target) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+            if(targetSource) {
+                if(creep.harvest(targetSource) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targetSource);
                 }
             }
         }

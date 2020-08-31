@@ -2,9 +2,9 @@ module.exports = {
     minimumCreepCount: {
         'harvester': 1,
         'upgrader': 1,
-        'builder': 5,
+        'builder': 1,
         'repairer': 1,
-        'wallRepairer': 2,
+        'wallRepairer': 4,
     },
     run: function(spawn, minimumCreepCount, creepCount) {
         if (creepCount.harvester < this.minimumCreepCount.harvester) {
