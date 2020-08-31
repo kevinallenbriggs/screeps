@@ -7,10 +7,10 @@ const status = require('status');
 const roleWallRepairer = require('./role.wallRepairer');
 
 // get some status updates
-status.print();
+status.print(spawner);
 
 // spawn creeps
-spawner.run(Game.spawns['Worker'], status.minimumCreepCount, status.creepCount);
+spawner.run(Game.spawns['Worker'], status);
 
 // get creepy
 for (const name in Game.creeps) {

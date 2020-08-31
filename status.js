@@ -1,7 +1,5 @@
-const spawner = require('spawner');
-
 module.exports = {
-    print: function(creepCount, minimumCreepCount) {
+    print: function(spawner) {
         console.log('Creep Count - ' +
             this.creepCount.harvester + '/' + spawner.minimumCreepCount.harvester + ' Harvesters | ' +
             this.creepCount.upgrader + '/' + spawner.minimumCreepCount.upgrader + ' Upgraders | ' +
