@@ -2,11 +2,11 @@ const status = require('status');
 
 module.exports = {
     minimumCreepCount: {
-        'harvester': 1,
+        'harvester': 2,
         'upgrader': 1,
-        'builder': 1,
+        'builder': 2,
         'repairer': 1,
-        'wallRepairer': 4,
+        'wallRepairer': 6,
     },
     run: function(spawn) {
         if (status.creepCount.harvester < this.minimumCreepCount.harvester) {
