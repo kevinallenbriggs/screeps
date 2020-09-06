@@ -1,4 +1,4 @@
-const roleUpgrader = require('role.upgrader');
+const roleWallRepairer = require('./role.wallRepairer');
 
 module.exports = {
     run: function (creep) {
@@ -20,7 +20,7 @@ module.exports = {
                     creep.moveTo(target);
                 }
             } else {
-                roleUpgrader.run(creep);
+                roleWallRepairer.run(creep);
             }
         } else {
             const target = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
