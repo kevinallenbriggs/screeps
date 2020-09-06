@@ -1,4 +1,4 @@
-const roleBuilder = require('role.upgrader');
+const roleUpgrader = require('role.upgrader');
 
 module.exports = {
     run: function (creep) {
@@ -29,7 +29,7 @@ module.exports = {
                 }
             } else {
                 // no walls to repair
-                roleBuilder.run(creep);
+                roleUpgrader.run(creep);
             }
 
         } else {
