@@ -1,4 +1,4 @@
-const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
 
 module.exports = {
     run: function (creep) {
@@ -15,11 +15,13 @@ module.exports = {
 
             let targetWall = undefined;
 
-            for (let healthPercentage = 0.0001; healthPercentage <= 1; healthPercentage += 0.0001) {
-                if (targetWall = creep.pos.findClosestByPath(walls, {
-                    filter: (wall) => wall.hits / wall.hitsMax < healthPercentage
-                })) {
-                    break;
+            for (let healthPercentage = 0.01; healthPercentage <= 1; healthPercentage += 0.01) {
+
+                for (const wall of walls) {
+                    if (wall.hits / wall.hitsMax < healthPercentage) {
+                        targetWall = wall;
+                        break;
+                    }
                 }
             }
 
