@@ -1,5 +1,3 @@
-const roleBuilder = require('role.builder');
-
 module.exports = {
     run: function (creep) {
         if (creep.memory.working && creep.carry.energy == 0) {
