@@ -1,16 +1,16 @@
 const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
-const spawner = require('spawner');
 const roleRepairer = require('role.repairer');
 const status = require('status');
 const roleWallRepairer = require('./role.wallRepairer');
+const spawner = require('spawner');
 
 // get some status updates
 status.print(spawner);
 
 // spawn creeps
-spawner.run(Game.spawns['Worker'], status);
+spawner.run(Game.spawns['Worker'], Game.spawns['Worker'].room.energyCapacityAvailable);
 
 // get creepy
 for (const name in Game.creeps) {
