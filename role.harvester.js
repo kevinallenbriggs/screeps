@@ -11,28 +11,36 @@ module.exports = {
             creep.memory.working = true;
         }
 
+        let target = undefined;
+
         // if creep is supposed to transfer energy to the spawn
         if (creep.memory.working == true) {
-            const energyStructure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+            target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 filter: (structure) => (structure.structureType == STRUCTURE_SPAWN ||
                  structure.structureType == STRUCTURE_EXTENSION ||
-                 structure.structureType == STRUCTURE_CONTAINER) &&
+                 structure.structureType == STRUCTURE_CONTAINER ||
+                 structure.structureType == STRUCTURE_TOWER) &&
                  structure.energy < structure.energyCapacity
             });
+
+            // drop off at a container instead of doing nothing
+
             // try to transfer energy, if the spawn is not in range
-            if (creep.transfer(energyStructure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                // move towards the spawn
-                creep.moveTo(energyStructure);
+            if (target) {
+                if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    // move towards the spawn
+                    creep.moveTo(target);
+                }
             }
         }
         // if creep is supposed to harvest energy from source
         else {
             // find closest source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES);
+            let target = creep.pos.findClosestByPath(FIND_SOURCES);
             // try to harvest energy, if the source is not in range
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+            if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
                 // move towards the source
-                creep.moveTo(source);
+                creep.moveTo(target);
             }
         }
     }

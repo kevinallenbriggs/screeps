@@ -7,25 +7,32 @@ module.exports = {
         }
 
         if (creep.memory.working == true) {
-            const walls = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => structure.structureType == STRUCTURE_WALL
+            const potentialTargets = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => structure.structureType == STRUCTURE_WALL ||
+                    structure.structureType == STRUCTURE_RAMPART
             });
 
-            let targetWall = undefined;
+            potentialTargets.sort((a, b) => a.structureType == STRUCTURE_RAMPART > b.structureType == STRUCTURE_RAMPART);
 
-            for (let healthPercentage = 0.01; healthPercentage <= 1; healthPercentage += 0.01) {
+            let targetStructure = undefined;
 
-                for (const wall of walls) {
-                    if (wall.hits / wall.hitsMax < healthPercentage) {
-                        targetWall = wall;
+            for (let healthPercentage = 0.0015; healthPercentage <= 1; healthPercentage += 0.0015) {
+
+                for (const structure of potentialTargets) {
+                    if (structure.hits / structure.hitsMax < healthPercentage) {
+                        targetStructure = structure;
                         break;
                     }
                 }
+
+                if (targetStructure) {
+                    break;
+                }
             }
 
-            if (targetWall !== undefined) {
-                if (creep.repair(targetWall) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targetWall);
+            if (targetStructure !== undefined) {
+                if (creep.repair(targetStructure) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targetStructure);
                 }
             } else {
                 // no walls to repair

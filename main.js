@@ -36,3 +36,16 @@ for (const name in Game.creeps) {
         roleWallRepairer.run(creep);
     }
 }
+
+// run towers
+const towers = Game.spawns['Worker'].room.find(FIND_STRUCTURES, {
+    filter: (structure) => structure.structureType === STRUCTURE_TOWER
+});
+
+for (const tower of towers) {
+    const target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+
+    if (target != undefined) {
+        tower.attack(target);
+    }
+}

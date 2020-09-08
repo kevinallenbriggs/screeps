@@ -1,5 +1,3 @@
-const roleBuilder = require('role.builder');
-
 module.exports = {
     run: function (creep) {
         if (creep.memory.working && creep.carry.energy == 0) {
@@ -9,13 +7,13 @@ module.exports = {
         }
 
         if (creep.memory.working == true) {
-            const structureNeedingRepair = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+            const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: (structure) => structure.hits < structure.hitsMax && structure.structureType !== STRUCTURE_WALL
             });
 
-            if (structureNeedingRepair !== undefined) {
-                if (creep.repair(structureNeedingRepair) !== ERR_NOT_IN_RANGE) {
-                    creep.moveTo(structureNeedingRepair);
+            if (target) {
+                if (creep.repair(target) !== ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
                 }
             }
         } else {
