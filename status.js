@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports = {
     print: function(spawner) {
         console.log('Creep Count - ' +
@@ -6,7 +8,7 @@ module.exports = {
             this.creepCount.builder + '/' + spawner.minimumCreepCount.builder + ' Builders | ' +
             this.creepCount.repairer + '/' + spawner.minimumCreepCount.repairer + ' Repairers | ' +
             this.creepCount.wallRepairer + '/' + spawner.minimumCreepCount.wallRepairer + ' WallRepairers\n' +
-    
+
             'Creeps Working - ' + _.sum(Game.creeps, (creep) => creep.memory.working == true) +
                 '/' + this.totalCreeps
         );

@@ -1,3 +1,5 @@
+const roleBuilder = require("./role.builder");
+
 module.exports = {
     run: function (creep) {
         // if creep is bringing energy to the spawn but has no energy left
@@ -31,16 +33,26 @@ module.exports = {
                     // move towards the spawn
                     creep.moveTo(target);
                 }
+            } else {
+                roleBuilder.run(creep);
             }
         }
         // if creep is supposed to harvest energy from source
         else {
             // find closest source
-            let target = creep.pos.findClosestByPath(FIND_SOURCES);
-            // try to harvest energy, if the source is not in range
-            if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
-                // move towards the source
-                creep.moveTo(target);
+            let target = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
+
+            if (target) {
+                if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                }
+            } else {
+                let target = creep.pos.findClosestByPath(FIND_SOURCES);
+
+                if (creep.harvest(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                }
+
             }
         }
     }
