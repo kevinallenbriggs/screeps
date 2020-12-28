@@ -1,9 +1,27 @@
 {
-  "dependencies": {
-    "@types/lodash": "^4.14.161",
-    "@types/screeps": "^3.1.3"
+  "name": "redisforlosers-screeps",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "grunt"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redisforlosers/screeps.git"
+  },
+  "author": "Kevin Briggs <redisforlosers@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redisforlosers/screeps/issues"
+  },
+  "homepage": "https://github.com/redisforlosers/screeps#readme",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "grunt": "^1.3.0",
+    "grunt-contrib-copy": "^1.0.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20"
   }
 }

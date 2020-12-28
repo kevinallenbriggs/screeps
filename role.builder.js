@@ -1,35 +1,36 @@
-const roleUpgrader = require('./role.upgrader');
-
 module.exports = {
-    run: function (creep) {
-        if (creep.memory.working && creep.carry.energy == 0) {
+
+    run: (creep) => {
+        if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.working = false;
-        } else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        } else if (! creep.memory.working && creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
             creep.memory.working = true;
         }
 
-        if (creep.memory.working == true) {
-            if (target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES, {
-                filter: (site) => site.structureType == STRUCTURE_EXTENSION
-            })) {
-                if (creep.build(target) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
-                }
-            } else if (target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES)) {
-                if (creep.build(target) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+
+        if (creep.memory.working) {
+            const targets = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+
+            if (targets) {
+                if (creep.build(targets, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targets);
                 }
             } else {
-                roleUpgrader.run(creep);
+                const target = creep.room.controller;
+
+                if (creep.upgradeController(target) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                }
             }
         } else {
-            const target = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+            const sources = creep.room.find(FIND_SOURCES);
 
-            if(target) {
-                if(creep.harvest(target) == ERR_NOT_IN_RANGE) {
+            if (sources.length) {
+                const target = creep.pos.findClosestByPath(sources);
+                if (creep.harvest(target) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
             }
         }
     }
-};
+}
